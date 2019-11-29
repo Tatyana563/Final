@@ -1,4 +1,4 @@
-package model;
+package com.home.sphibcity.model;
 
 import lombok.Getter;
 import lombok.Setter;

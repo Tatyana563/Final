@@ -1,4 +1,4 @@
-package service;
+package com.home.sphibcity.service;
 
 import java.util.Collection;
 import java.util.Optional;

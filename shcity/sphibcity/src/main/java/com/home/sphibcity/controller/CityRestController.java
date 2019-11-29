@@ -1,10 +1,10 @@
 package com.home.sphibcity.controller;
 
-import model.CityEntity;
+import com.home.sphibcity.model.CityEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import service.CityService;
+import com.home.sphibcity.service.CityService;
 
 import java.util.Collection;
 // controller listens to requests from the Internet and directs to proper

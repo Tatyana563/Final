@@ -1,10 +1,8 @@
-package service;
+package com.home.sphibcity.service;
 
-import model.CountryEntity;
-import org.hibernate.cache.spi.FilterKey;
+import com.home.sphibcity.model.CountryEntity;
 
 import java.util.Collection;
-import java.util.Map;
 
 public interface CountryService extends GenericService<CountryEntity, Integer> {
     Collection<CountryEntity> findAll(int position, int limit);

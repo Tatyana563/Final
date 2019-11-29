@@ -1,7 +1,9 @@
-package service;
+package com.home.sphibcity.service;
 
-import dao.CountryDao;
-import model.CountryEntity;
+
+
+import com.home.sphibcity.model.CountryEntity;
+import com.home.sphibcity.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,34 +14,36 @@ import java.util.Optional;
 
 public class CountryServiceImpl implements CountryService {
     @Autowired
-    private CountryDao countryDao;
+    private CountryRepository countryRepository;
     @Override
     @Transactional
     public Collection<CountryEntity> findAll(int position, int limit) {
-        countryDao.findAll();
+       countryRepository.findAll();
         return null;
     }
 
     @Override
     public void createOrUpdate(CountryEntity entity) {
-countryDao.save(entity);
+countryRepository.save(entity);
     }
 
     @Override
     public Collection<CountryEntity> findAll() {
-        return countryDao.findAll();
+        return countryRepository.findAll();
     }
 
     @Override
     public Optional<CountryEntity> findById(int id) {
-        return Optional.empty();
+        Optional<CountryEntity> city=countryRepository.findById(id);
+        return Optional.ofNullable(city.orElse(new CountryEntity()));
     }
 
     @Override
     public void remove(int id) {
 Optional<CountryEntity> countryEntity=findById(id);
 if(countryEntity.isPresent()){
-    countryDao.delete(countryEntity.get());
+   countryRepository.delete(countryEntity.get());
 }
     }
+
 }

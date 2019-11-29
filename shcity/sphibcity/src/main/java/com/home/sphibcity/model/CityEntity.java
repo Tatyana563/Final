@@ -1,10 +1,10 @@
-package model;
+package com.home.sphibcity.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import model.enumeration.Type;
+import com.home.sphibcity.model.enumeration.Type;
 
 import javax.persistence.*;
 

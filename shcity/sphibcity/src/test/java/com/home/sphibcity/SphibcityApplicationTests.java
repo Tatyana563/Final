@@ -1,17 +1,17 @@
 package com.home.sphibcity;
 
-import model.CityEntity;
-import model.CountryEntity;
-import model.enumeration.Currency;
-import model.enumeration.Language;
-import model.enumeration.Type;
+import com.home.sphibcity.model.CityEntity;
+import com.home.sphibcity.model.CountryEntity;
+import com.home.sphibcity.model.enumeration.Currency;
+import com.home.sphibcity.model.enumeration.Language;
+import com.home.sphibcity.model.enumeration.Type;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.test.context.junit4.SpringRunner;
-import service.CityServiceImpl;
-import service.CountryServiceImpl;
+import com.home.sphibcity.service.CityServiceImpl;
+import com.home.sphibcity.service.CountryServiceImpl;
+import org.springframework.util.Assert;
 
 //@RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,6 +33,9 @@ class SphibcityApplicationTests {
 		//cityEntity.setPopulation(1000);
 		//cityEntity.setSquare(500.00);
 		cityService.createOrUpdate(cityEntity);
+
+		cityService.updateCityPopulation(cityEntity.getId(), 12345);
+		Assertions.assertTrue(cityService.findById(cityEntity.getId()).get().getPopulation() == 12345);
 
 	}
 	@Test

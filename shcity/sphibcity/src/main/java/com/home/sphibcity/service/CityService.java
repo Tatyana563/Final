@@ -1,6 +1,6 @@
-package service;
+package com.home.sphibcity.service;
 
-import model.CityEntity;
+import com.home.sphibcity.model.CityEntity;
 
 public interface CityService extends GenericService<CityEntity, Integer> {
     void updateCityPopulation(int cityId, int cityPopulation);

@@ -1,11 +1,11 @@
-package model;
+package com.home.sphibcity.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import model.enumeration.Currency;
-import model.enumeration.Language;
+import com.home.sphibcity.model.enumeration.Currency;
+import com.home.sphibcity.model.enumeration.Language;
 
 import javax.persistence.*;
 import java.util.ArrayList;
