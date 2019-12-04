@@ -1,6 +1,7 @@
 package com.home.sphibcity.service;
 
 
+import com.home.sphibcity.dto.request.CityRequest;
 import com.home.sphibcity.model.CityEntity;
 import com.home.sphibcity.repository.CityRepository;
 import com.home.sphibcity.repository.CountryRepository;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 
-@Service
+@Service("cityService")
 public class CityServiceImpl implements CityService {
     @Autowired
     private CityRepository cityRepository;
@@ -58,5 +59,12 @@ cityRepository.delete(cityEntity);
             cityRepository.save(city);
         }*/
         cityRepository.updateCityPopulation(cityId, cityPopulation);
+    }
+    @Override
+    @Transactional
+    public CityRequest deleteByIdRequest(int id) {
+        CityEntity cityEntity =findById(id).get();
+       cityRepository.delete(cityEntity);
+        return null;
     }
 }

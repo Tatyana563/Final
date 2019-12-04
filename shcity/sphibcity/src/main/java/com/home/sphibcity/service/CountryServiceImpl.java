@@ -2,6 +2,7 @@ package com.home.sphibcity.service;
 
 
 
+import com.home.sphibcity.dto.request.CountryRequest;
 import com.home.sphibcity.model.CountryEntity;
 import com.home.sphibcity.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,13 @@ Optional<CountryEntity> countryEntity=findById(id);
 if(countryEntity.isPresent()){
    countryRepository.delete(countryEntity.get());
 }
+    }
+    @Override
+    @Transactional
+    public CountryRequest deleteByIdRequest(int id) {
+        CountryEntity countryEntity =findById(id).get();
+      countryRepository.delete(countryEntity);
+        return null;
     }
 
 }

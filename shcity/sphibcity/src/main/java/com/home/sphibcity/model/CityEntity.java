@@ -1,5 +1,7 @@
 package com.home.sphibcity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,13 +24,15 @@ import javax.persistence.*;
                 }
         )
 )
-@ToString
+
 @Setter
 @Getter
 @Entity
 @NoArgsConstructor
 @Table(name="CITY")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CityEntity extends CommonInfoEntity {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_city")
     @SequenceGenerator(name="seq_city", sequenceName = "city_sequence", allocationSize = 1)
