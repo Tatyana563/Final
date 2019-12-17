@@ -1,26 +1,23 @@
 package com.home.sphibcity.dto.response;
 
+import com.home.sphibcity.dto.request.CityRequest;
 import com.home.sphibcity.model.CityEntity;
+import lombok.Getter;
 
 import java.util.Objects;
 
-public class CityResponse {
-    String name;
-    String type;
-    String description;
-    Boolean capital;
-    Integer countryId;// shall it be there???
-    Integer population;
-    Double square;
+@Getter
+public class CityResponse extends CityRequest {
 
-    public CityResponse(CityEntity cityEntity){
-        if(Objects.isNull(cityEntity)) return;
-       this.name=cityEntity.getName();
-       this.type=cityEntity.getType().name();
-       this.description=cityEntity.getDescription();
-       this.capital=cityEntity.getCapital();
-     this.countryId=cityEntity.getCountryId();// shall it be there???
-      this.population=cityEntity.getPopulation();
-       this.square=cityEntity.getSquare();
+
+    public CityResponse(CityEntity cityEntity) {
+        if (Objects.isNull(cityEntity)) return;
+        name = cityEntity.getName();
+        setType(cityEntity.getType().name());
+        description = cityEntity.getDescription();
+        setCapital(cityEntity.getCapital());
+        setCountryId(cityEntity.getCountryId());
+        population = cityEntity.getPopulation();
+        square = cityEntity.getSquare();
     }
 }

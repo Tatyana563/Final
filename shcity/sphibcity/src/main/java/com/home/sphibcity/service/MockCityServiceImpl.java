@@ -44,10 +44,7 @@ public class MockCityServiceImpl implements CityService {
 
     }
 
-    @Override
-    public CityRequest deleteByIdRequest(int id) {
-        return null;
-    }
+
 
     @Override
     public void createOrUpdate(CityEntity entity) {

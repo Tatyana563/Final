@@ -1,8 +1,6 @@
 package com.home.sphibcity.service;
 
 
-
-import com.home.sphibcity.dto.request.CountryRequest;
 import com.home.sphibcity.model.CountryEntity;
 import com.home.sphibcity.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +9,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
+
 @Service
 
 public class CountryServiceImpl implements CountryService {
     @Autowired
     private CountryRepository countryRepository;
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<CountryEntity> findAll(int position, int limit) {
-       countryRepository.findAll();
-        return null;
+        return countryRepository.findAll();
     }
 
     @Override
     public void createOrUpdate(CountryEntity entity) {
-countryRepository.save(entity);
+        countryRepository.save(entity);
     }
 
     @Override
@@ -35,23 +34,17 @@ countryRepository.save(entity);
 
     @Override
     public Optional<CountryEntity> findById(int id) {
-        Optional<CountryEntity> city=countryRepository.findById(id);
-        return Optional.ofNullable(city.orElse(new CountryEntity()));
+        Optional<CountryEntity> city = countryRepository.findById(id);
+       return Optional.ofNullable(city.orElse(new CountryEntity()));
+       // return Optional.ofNullable(city.orElse("empty"));
     }
 
     @Override
     public void remove(int id) {
-Optional<CountryEntity> countryEntity=findById(id);
-if(countryEntity.isPresent()){
-   countryRepository.delete(countryEntity.get());
-}
-    }
-    @Override
-    @Transactional
-    public CountryRequest deleteByIdRequest(int id) {
-        CountryEntity countryEntity =findById(id).get();
-      countryRepository.delete(countryEntity);
-        return null;
+        Optional<CountryEntity> countryEntity = findById(id);
+        if (countryEntity.isPresent()) {
+            countryRepository.delete(countryEntity.get());
+        }
     }
 
 }

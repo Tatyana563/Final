@@ -25,7 +25,7 @@ public class CityServiceImpl implements CityService {
     @Transactional
     public void createOrUpdate(CityEntity entity)
     {
-cityRepository.save(entity);
+        cityRepository.save(entity);
     }
 
     @Override
@@ -39,7 +39,7 @@ cityRepository.save(entity);
     @Transactional
     public Optional<CityEntity> findById(int id) {
         Optional<CityEntity> city=cityRepository.findById(id);
-        return Optional.ofNullable(city.orElse(new CityEntity()));
+        return Optional.ofNullable(city.orElse(null));
     }
 
     @Override
@@ -60,11 +60,5 @@ cityRepository.delete(cityEntity);
         }*/
         cityRepository.updateCityPopulation(cityId, cityPopulation);
     }
-    @Override
-    @Transactional
-    public CityRequest deleteByIdRequest(int id) {
-        CityEntity cityEntity =findById(id).get();
-       cityRepository.delete(cityEntity);
-        return null;
-    }
+
 }
