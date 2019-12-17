@@ -8,19 +8,17 @@ import com.home.sphibcity.model.CityEntity;
 import com.home.sphibcity.model.CountryEntity;
 import com.home.sphibcity.model.enumeration.Language;
 import com.home.sphibcity.model.enumeration.Type;
-import org.apache.tomcat.util.net.SSLHostConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
-import java.lang.reflect.Array;
-import java.time.Instant;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 //Задача, при создании новой страны рассылать пользователям, которые сконфигурированы
 // в новой специальной таблице, письмо, в теле письма  - вся информация про созданную
 // страну.  Задача должна запускаться каждые 3 минуты
@@ -32,6 +30,7 @@ public class MailSchedulerService {
     public static void main(String[] args) throws MessagingException {
         MailSchedulerService ms = new MailSchedulerService();
        ms.saveCountryUpdates();
+
     }
 
     @Autowired
@@ -47,7 +46,7 @@ public class MailSchedulerService {
         helper.addAttachment("simple attachment", new File("D:\\JAVA\\project\\shcity\\sphibcity\\src\\main\\resources\\templates\\index.html"));
         helper.setText("Test mail");
         helper.setTo("nikolaev.english@gmail.com");
-        helper.setSubject("Testc mail subject");
+        helper.setSubject("Test mail subject");
         javaMailSender.send(mimeMessage);
     }
 
@@ -58,6 +57,7 @@ public class MailSchedulerService {
         countryEntity.setLanguage(Language.Polish);
         countryEntity.setSquare(66.5);
         cityEntity.setName("Warsaw");
+        System.out.println(countryEntity);
         cityEntity.setType(Type.EMERGING_GATEWAY);
         cityEntity.setCountryId(countryEntity.getId());
         countryService.createOrUpdate(countryEntity);
@@ -66,27 +66,30 @@ public class MailSchedulerService {
     }
 
     public  void saveCountryUpdates() throws MessagingException {
+        CountryEntity beforeCountryEntity = countryService.findById(countryEntity.getId()).get();
         init();
-        ObjectMapper objectMapper = new ObjectMapper();
-        try(FileOutputStream out = new FileOutputStream("D:\\JAVA\\General\\mail.json")){
-            out.write(objectMapper.writeValueAsBytes(countryEntity));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try(FileInputStream in = new FileInputStream("D:\\JAVA\\General\\mail.json")){
-            CountryEntity desCountry=objectMapper.readValue(in,CountryEntity.class);
-            System.out.println(desCountry);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (!countryEntity.equals(beforeCountryEntity)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            try (FileOutputStream out = new FileOutputStream("D:\\JAVA\\General\\mail.json")) {
+                out.write(objectMapper.writeValueAsBytes(countryEntity));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try (FileInputStream in = new FileInputStream("D:\\JAVA\\General\\mail.json")) {
+                CountryEntity desCountry = objectMapper.readValue(in, CountryEntity.class);
+                System.out.println(desCountry);
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        sendCountryUpdatesEmail();
+            sendCountryUpdatesEmail();
+        }
     }
 
     @Scheduled(cron = "* 0/3 * * * * ")
