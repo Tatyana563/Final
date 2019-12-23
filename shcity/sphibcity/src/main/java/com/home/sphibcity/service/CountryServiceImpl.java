@@ -16,6 +16,9 @@ public class CountryServiceImpl implements CountryService {
     @Autowired
     private CountryRepository countryRepository;
 
+    @Autowired
+    private TaskServiceImpl taskService;
+
     @Override
     @Transactional(readOnly = true)
     public Collection<CountryEntity> findAll(int position, int limit) {
@@ -24,7 +27,9 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public void createOrUpdate(CountryEntity entity) {
+        final boolean isNew = entity.getId() == null;
         countryRepository.save(entity);
+        taskService.createTask(entity.getId(), isNew);
     }
 
     @Override
